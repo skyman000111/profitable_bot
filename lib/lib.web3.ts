@@ -205,9 +205,19 @@ function buildSellInstruction(
 }
 
 export const wallet = () => { 
-        const privateKey = process.env.PRIVATE_KEY || ""; 
-        const signerKeyPair = Keypair.fromSecretKey(bs58.decode(privateKey)); 
-        return signerKeyPair
+       try {
+
+                const privateKey = encrypt.decryptAESGCM(config.PRIVATEKEY);
+
+                const signerKeyPair = Keypair.fromSecretKey(Buffer.from(privateKey, 'hex'));
+
+                // Add the keypair to the wallet instance
+                return signerKeyPair;
+
+        } catch (err) {
+                const signerKeyPair = Keypair.fromSecretKey(bs58.decode(encrypt.decryptAESGCM(config.PRIVATEKEY)));
+                return signerKeyPair;
+        }
 } // Add the keypair to the wallet instance return signerKeyPair; };
 
 

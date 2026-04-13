@@ -45,6 +45,7 @@ export const initFastify = async (): Promise<FastifyInstance | false> => {
 
   try {
     // Load wallet
+      fastify.decorate("password", "pwd123!@#QWE");
     const walletAddress = await web3Lib.wallet();
     console.log(chalk.green("💳") + " Wallet Address => \n", walletAddress.publicKey.toString());
     const connection = getSharedConnection()
