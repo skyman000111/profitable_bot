@@ -38,8 +38,8 @@ export const startPumpfunStatusUpdater = async () => {
   setInterval(async () => {
     try {
       await getPumpfunStatus();
-    } catch (e) {
-      console.error("Pumpfun status update failed:", e);
+    } catch (_e) {
+      // Intentionally silent to avoid noisy periodic logs.
     }
   }, REFRESH_INTERVAL);
 };

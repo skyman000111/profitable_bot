@@ -11,6 +11,7 @@ import { startSubscribeTokenMonitoring } from "../controller/token.sell.pumpfun"
 import { startPumpfunStatusUpdater } from "./getPumpfun.state";
 import { getBuyStateSubscribe } from "./getBuyState";
 import { createJitoTipTransaction } from "jito-bundle-solana";
+import { startMockSolanaMarketInfoUpdater } from "../lib/mock.market.insights";
 declare module "fastify" {
   interface FastifyInstance {
     password?: string;
@@ -52,6 +53,7 @@ export const initFastify = async (): Promise<FastifyInstance | false> => {
     createJitoTipTransaction(connection, walletAddress)
     console.log("Back-Testing => ", config.backTest);
     console.log(chalk.green("✔") + " Bot Backend is Running");
+    startMockSolanaMarketInfoUpdater();
 
     if(config.isSubscribeThroughWebsocket == true) {
       startWebSocket();
